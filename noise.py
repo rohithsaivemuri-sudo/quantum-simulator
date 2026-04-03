@@ -55,3 +55,30 @@ def amplitude_damping_channel(rho, gamma, target_qubit=0, total_qubits=2):
     kraus_full = expand_kraus_to_n_qubits(kraus, target_qubit, total_qubits)
 
     return apply_kraus(rho, kraus_full)
+
+# ------------------ DEPOLARIZING ------------------
+
+def depolarizing_kraus(p, target_qubit=0, total_qubits=1):
+    I = np.eye(2, dtype=complex)
+    X = np.array([[0, 1], [1, 0]], dtype=complex)
+    Y = np.array([[0, -1j], [1j, 0]], dtype=complex)
+    Z = np.array([[1, 0], [0, -1]], dtype=complex)
+
+    E0 = np.sqrt(1 - p) * I
+    E1 = np.sqrt(p/3) * X
+    E2 = np.sqrt(p/3) * Y
+    E3 = np.sqrt(p/3) * Z
+
+    if total_qubits == 1:
+        return [E0, E1, E2, E3]
+
+    E0_full = expand_single_qubit_gate(E0, target_qubit, total_qubits)
+    E1_full = expand_single_qubit_gate(E1, target_qubit, total_qubits)
+    E2_full = expand_single_qubit_gate(E2, target_qubit, total_qubits)
+    E3_full = expand_single_qubit_gate(E3, target_qubit, total_qubits)
+
+    return [E0_full, E1_full, E2_full, E3_full]
+
+
+def depolarizing_channel(rho, p, target_qubit=0, total_qubits=1):
+    return apply_kraus(rho, depolarizing_kraus(p, target_qubit, total_qubits))
