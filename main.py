@@ -93,6 +93,28 @@ def main():
     print(rho)
     print(f"\nFinal Trace: {np.trace(rho).real:.6f}  (should be 1.0)")
 
+    # ----------------------------------------
+    # 5. MEASUREMENT
+    # ----------------------------------------
+    from measurement import get_probabilities, sample
+
+    print("\n=== MEASUREMENT ===")
+
+    probs = get_probabilities(rho)
+    print("\nIdeal Probabilities from density matrix:")
+    for i, p in enumerate(probs):
+        print(f"  |{format(i, '02b')}⟩ : {p:.4f}")
+
+    print("\nSampling 1000 shots (no readout noise):")
+    counts_ideal = sample(rho, shots=1000, p01=0.0, p10=0.0)
+    for state, count in sorted(counts_ideal.items()):
+        print(f"  |{state}⟩ : {count} shots ({count/10:.1f}%)")
+
+    print("\nSampling 1000 shots (with readout noise p01=0.02, p10=0.03):")
+    counts_noisy = sample(rho, shots=1000, p01=0.02, p10=0.03)
+    for state, count in sorted(counts_noisy.items()):
+        print(f"  |{state}⟩ : {count} shots ({count/10:.1f}%)")
+
 
 if __name__ == "__main__":
     main()
