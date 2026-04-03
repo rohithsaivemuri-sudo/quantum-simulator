@@ -56,6 +56,7 @@ def amplitude_damping_channel(rho, gamma, target_qubit=0, total_qubits=2):
 
     return apply_kraus(rho, kraus_full)
 
+
 # ------------------ DEPOLARIZING ------------------
 
 def depolarizing_kraus(p, target_qubit=0, total_qubits=1):
@@ -82,3 +83,11 @@ def depolarizing_kraus(p, target_qubit=0, total_qubits=1):
 
 def depolarizing_channel(rho, p, target_qubit=0, total_qubits=1):
     return apply_kraus(rho, depolarizing_kraus(p, target_qubit, total_qubits))
+
+
+# ------------------ NOISE PIPELINE ------------------
+
+def apply_noise(rho, noise_model):
+    for noise_fn in noise_model:
+        rho = noise_fn(rho)
+    return rho
