@@ -10,6 +10,12 @@ def get_pp(t, Tphi):
 def compute_Tphi(T1, T2):
     return 1 / (1/T2 - 1/(2*T1))
 
+def thermal_relaxation_from_T1_T2(rho, t, T1, T2, target_qubit=0, total_qubits=1):
+    if T2 > 2 * T1:
+        raise ValueError(f"T2 ({T2}) cannot exceed 2*T1 ({T1})")
+    Tphi = compute_Tphi(T1, T2)
+    return thermal_relaxation_channel(rho, t, T1, Tphi, target_qubit, total_qubits)
+
 def apply_kraus(rho, kraus_ops):
     rho_new = np.zeros_like(rho, dtype=complex)
 
@@ -108,8 +114,7 @@ def apply_noise(rho, noise_model):
 def thermal_relaxation_channel(rho, t, T1, Tphi, target_qubit=0, total_qubits=1):
     
     p_a = get_pa(t, T1)      # amplitude damping
-    p_p = get_pp(t, Tphi)    # phase damping
-
+    p_p = min(get_pp(t, Tphi), 0.5)
     # Apply amplitude damping
     rho = amplitude_damping_channel(rho, p_a, target_qubit, total_qubits)
 

@@ -10,8 +10,6 @@ def normalize(state):
 def tensor(a,b):
     return np.kron(a,b)
 
-def apply_gate(operator,state):
-    return operator @ state
 
 def check_kraus(kraus_ops):
     dim = kraus_ops[0].shape[0]
