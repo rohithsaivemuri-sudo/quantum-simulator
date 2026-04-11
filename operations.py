@@ -9,6 +9,22 @@ def apply_gate(state, gate):
 def apply_unitary_density(rho, U):
     return U @ rho @ U.conj().T
 
+# ------------------ IDLE NOISE ------------------
+
+def apply_idle_noise(rho, t, T1, Tphi, target_qubit=0, total_qubits=1):
+    from noise import thermal_relaxation_channel
+    return thermal_relaxation_channel(rho, t, T1, Tphi, target_qubit, total_qubits)
+
+def apply_gate_with_noise(rho, U, t, T1, Tphi, target_qubit=0, total_qubits=1):
+    
+    # Step 1: apply gate
+    rho = apply_unitary_density(rho, U)
+    
+    # Step 2: apply time-based noise
+    from noise import thermal_relaxation_channel
+    rho = thermal_relaxation_channel(rho, t, T1, Tphi, target_qubit, total_qubits)
+    
+    return rho
 
 def apply_cnot(state):
     """

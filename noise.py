@@ -1,6 +1,11 @@
 import numpy as np
 from expand import expand_single_qubit_gate, expand_kraus_to_n_qubits
 
+def get_pa(t, T1):
+    return 1 - np.exp(-t / T1)
+
+def get_pp(t, Tphi):
+    return 1 - np.exp(-t / Tphi)
 
 def apply_kraus(rho, kraus_ops):
     rho_new = np.zeros_like(rho, dtype=complex)
@@ -90,4 +95,26 @@ def depolarizing_channel(rho, p, target_qubit=0, total_qubits=1):
 def apply_noise(rho, noise_model):
     for noise_fn in noise_model:
         rho = noise_fn(rho)
+    return rho
+
+# ------------------ THERMAL RELAXATION (TIME-DEPENDENT) ------------------
+
+def get_pa(t, T1):
+    return 1 - np.exp(-t / T1)
+
+def get_pp(t, Tphi):
+    return 1 - np.exp(-t / Tphi)
+
+
+def thermal_relaxation_channel(rho, t, T1, Tphi, target_qubit=0, total_qubits=1):
+    
+    p_a = get_pa(t, T1)      # amplitude damping
+    p_p = get_pp(t, Tphi)    # phase damping
+
+    # Apply amplitude damping
+    rho = amplitude_damping_channel(rho, p_a, target_qubit, total_qubits)
+
+    # Apply dephasing
+    rho = dephasing_channel(rho, p_p, target_qubit, total_qubits)
+
     return rho
