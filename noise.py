@@ -7,6 +7,9 @@ def get_pa(t, T1):
 def get_pp(t, Tphi):
     return 1 - np.exp(-t / Tphi)
 
+def compute_Tphi(T1, T2):
+    return 1 / (1/T2 - 1/(2*T1))
+
 def apply_kraus(rho, kraus_ops):
     rho_new = np.zeros_like(rho, dtype=complex)
 
@@ -54,7 +57,7 @@ def amplitude_damping_kraus(gamma):
     return [K0, K1]
 
 
-def amplitude_damping_channel(rho, gamma, target_qubit=0, total_qubits=2):
+def amplitude_damping_channel(rho, gamma, target_qubit=0, total_qubits=1):
     kraus = amplitude_damping_kraus(gamma)
 
     kraus_full = expand_kraus_to_n_qubits(kraus, target_qubit, total_qubits)
@@ -99,11 +102,7 @@ def apply_noise(rho, noise_model):
 
 # ------------------ THERMAL RELAXATION (TIME-DEPENDENT) ------------------
 
-def get_pa(t, T1):
-    return 1 - np.exp(-t / T1)
 
-def get_pp(t, Tphi):
-    return 1 - np.exp(-t / Tphi)
 
 
 def thermal_relaxation_channel(rho, t, T1, Tphi, target_qubit=0, total_qubits=1):
@@ -117,4 +116,24 @@ def thermal_relaxation_channel(rho, t, T1, Tphi, target_qubit=0, total_qubits=1)
     # Apply dephasing
     rho = dephasing_channel(rho, p_p, target_qubit, total_qubits)
 
+    return rho
+
+def apply_global_thermal_noise(rho, t, T1, Tphi, total_qubits):
+    
+    for q in range(total_qubits):
+        rho = thermal_relaxation_channel(
+            rho, t, T1, Tphi,
+            target_qubit=q,
+            total_qubits=total_qubits
+        )
+    
+    return rho
+
+def normalize_density_matrix(rho):
+    # Make Hermitian
+    rho = (rho + rho.conj().T) / 2
+    
+    # Normalize trace
+    rho = rho / np.trace(rho)
+    
     return rho
