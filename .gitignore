@@ -1,0 +1,17 @@
+# Python cache and environment
+__pycache__/
+*.py[cod]
+*.so
+.pytest_cache/
+
+# Virtual environment
+venv/
+
+# OS files
+.DS_Store
+
+# IDE/editor files
+*.swp
+*.swo
+.idea/
+.vscode/
