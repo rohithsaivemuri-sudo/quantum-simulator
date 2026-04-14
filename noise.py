@@ -101,9 +101,24 @@ def depolarizing_channel(rho, p, target_qubit=0, total_qubits=1):
 
 # ------------------ NOISE PIPELINE ------------------
 
-def apply_noise(rho, noise_model):
-    for noise_fn in noise_model:
-        rho = noise_fn(rho)
+# ADD THIS to noise.py
+from config import T1, Tphi, GATE_TIMES
+
+def apply_noise(rho, gate_name, target_qubits, total_qubits):
+    """
+    Looks up gate duration from config, computes noise params,
+    applies thermal relaxation to every target qubit.
+    """
+    t = GATE_TIMES[gate_name]
+
+    gamma = 1 - np.exp(-t / T1)          # amplitude damping strength
+    p_phi = 1 - np.exp(-t / Tphi)        # dephasing strength
+    p_phi = min(p_phi, 0.5)              # physical cap
+
+    for q in target_qubits:
+        rho = amplitude_damping_channel(rho, gamma, q, total_qubits)
+        rho = dephasing_channel(rho, p_phi, q, total_qubits)
+
     return rho
 
 # ------------------ THERMAL RELAXATION (TIME-DEPENDENT) ------------------
@@ -142,3 +157,6 @@ def normalize_density_matrix(rho):
     rho = rho / np.trace(rho)
     
     return rho
+
+
+

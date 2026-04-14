@@ -8,15 +8,11 @@ def tensor(a, b):
 
 
 def expand_single_qubit_gate(gate, target_qubit, total_qubits=2):
-    if total_qubits != 2:
-        raise NotImplementedError("Only 2-qubit systems supported")
-
-    if target_qubit == 0:
-        return tensor(gate, I)
-    elif target_qubit == 1:
-        return tensor(I, gate)
-    else:
-        raise ValueError("Invalid target qubit")
+    op = None
+    for i in range(total_qubits):
+        current = gate if i == target_qubit else I
+        op = current if op is None else tensor(op, current)
+    return op
 
 
 def expand_kraus_to_n_qubits(kraus_ops, target_qubit, total_qubits):

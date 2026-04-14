@@ -11,9 +11,12 @@ def apply_unitary_density(rho, U):
 
 # ------------------ IDLE NOISE ------------------
 
-def apply_idle_noise(rho, t, T1, Tphi, target_qubit=0, total_qubits=1):
+from config import T1, Tphi
+
+def apply_idle_noise(rho, idle_time, target_qubit=0, total_qubits=1):
     from noise import thermal_relaxation_channel
-    return thermal_relaxation_channel(rho, t, T1, Tphi, target_qubit, total_qubits)
+    return thermal_relaxation_channel(rho, idle_time, T1, Tphi, target_qubit, total_qubits)
+
 
 def apply_gate_with_noise(rho, U, t, T1, Tphi, target_qubit=0, total_qubits=1):
     
