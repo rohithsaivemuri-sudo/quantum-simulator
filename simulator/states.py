@@ -1,5 +1,5 @@
 import numpy as np
-from linalg import normalize
+from simulator.linalg import normalize
 
 zero= np.array([1,0],dtype=complex)
 one=np.array([0,1],dtype=complex)

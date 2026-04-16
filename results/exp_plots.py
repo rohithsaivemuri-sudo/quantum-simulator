@@ -1,11 +1,11 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
-from exp1 import run as run_depth_experiment
-from exp2 import run as run_t1_experiment
-from exp3 import run_ramsey
+from experiments.exp1 import run as run_depth_experiment
+from experiments.exp2 import run as run_t1_experiment
+from experiments.exp3 import run_ramsey
 
-from config import T1, T2
+from simulator.config import T1, T2
 
 # ================== RUN ==================
 t1 = run_t1_experiment()

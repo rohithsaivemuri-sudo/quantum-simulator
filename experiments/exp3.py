@@ -1,11 +1,11 @@
 # exp3.py — FINAL (NO MORE BUGS)
 
 import numpy as np
-from states import state_to_density
-from operations import apply_unitary_density
-from noise import compute_Tphi
-from gates import H
-from config import T1, T2
+from simulator.states import state_to_density
+from simulator.operations import apply_unitary_density
+from simulator.noise import compute_Tphi
+from simulator.gates import H
+from simulator.config import T1, T2
 
 
 def pure_dephasing_exact(rho, t, Tphi):

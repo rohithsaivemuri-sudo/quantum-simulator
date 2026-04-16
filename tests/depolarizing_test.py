@@ -1,5 +1,5 @@
 import numpy as np
-from noise import depolarizing_channel
+from simulator.noise import depolarizing_channel
 
 
 def test_trace_preserved():

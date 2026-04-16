@@ -1,7 +1,7 @@
 import numpy as np
-from expand import expand_single_qubit_gate
-from operations import apply_gate, apply_cnot
-from states import state_to_density
+from simulator.expand import expand_single_qubit_gate
+from simulator.operations import apply_gate, apply_cnot
+from simulator.states import state_to_density
 
 
 def test_density_matrix():

@@ -1,13 +1,13 @@
 # exp1.py — Depth vs Noise (FINAL)
 
 import numpy as np
-from states import state_to_density
-from expand import expand_single_qubit_gate
-from operations import apply_unitary_density
-from noise import apply_global_thermal_noise, compute_Tphi
-from gates import H, CNOT
-from measurement import sample
-from config import T1, T2
+from simulator.states import state_to_density
+from simulator.expand import expand_single_qubit_gate
+from simulator.operations import apply_unitary_density
+from simulator.noise import apply_global_thermal_noise, compute_Tphi
+from simulator.gates import H, CNOT
+from simulator.measurement import sample
+from simulator.config import T1, T2
 
 TOTAL_QUBITS = 2
 

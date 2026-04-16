@@ -1,9 +1,9 @@
 # exp2.py — T1 Decay (FINAL)
 
 import numpy as np
-from states import state_to_density
-from noise import apply_global_thermal_noise, compute_Tphi
-from config import T1, T2
+from simulator.states import state_to_density
+from simulator.noise import apply_global_thermal_noise, compute_Tphi
+from simulator.config import T1, T2
 
 TOTAL_QUBITS = 2
 def purity(rho):

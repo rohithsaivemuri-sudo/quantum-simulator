@@ -1,6 +1,6 @@
 import numpy as np
-from states import state_to_density, zero, one
-from measurement import get_probabilities, measure, apply_readout_noise, sample
+from simulator.states import state_to_density, zero, one
+from simulator.measurement import get_probabilities, measure, apply_readout_noise, sample
 
 
 def test_probabilities_zero_state():

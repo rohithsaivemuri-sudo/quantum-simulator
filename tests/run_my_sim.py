@@ -1,10 +1,10 @@
 import numpy as np
 
-from states import zero_density
-from gates import H, CNOT
-from expand import expand_single_qubit_gate
-from operations import apply_gate_with_noise
-from config import T1, Tphi, GATE_TIMES
+from simulator.states import zero_density
+from simulator.gates import H, CNOT
+from simulator.expand import expand_single_qubit_gate
+from simulator.operations import apply_gate_with_noise
+from simulator.config import T1, Tphi, GATE_TIMES
 
 
 # -------------------------------

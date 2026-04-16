@@ -1,14 +1,14 @@
  
 # main.py
 import numpy as np
-from circuit import GateOp
-from expand import expand_single_qubit_gate
-from operations import apply_unitary_density
-from noise import apply_noise, apply_global_thermal_noise, compute_Tphi
-from states import state_to_density
-from gates import H, CNOT
-from measurement import get_probabilities, sample
-from config import GATE_TIMES, T1, T2
+from simulator.circuit import GateOp
+from simulator.expand import expand_single_qubit_gate
+from simulator.operations import apply_unitary_density
+from simulator.noise import apply_noise, apply_global_thermal_noise, compute_Tphi
+from simulator.states import state_to_density
+from simulator.gates import H, CNOT
+from simulator.measurement import get_probabilities, sample
+from simulator.config import GATE_TIMES, T1, T2
  
 total_qubits = 2
  

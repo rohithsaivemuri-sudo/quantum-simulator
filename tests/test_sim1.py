@@ -3,18 +3,18 @@ import pytest
 import sys
 sys.path.insert(0, '/mnt/user-data/uploads')
 
-from states import zero, one, zero_zero, one_one, state_to_density, zero_density
-from gates import H, X, Z, CNOT
-from linalg import check_kraus
-from expand import expand_single_qubit_gate, expand_kraus_to_n_qubits
-from operations import apply_gate, apply_unitary_density, apply_cnot
-from noise import (
+from simulator.states import zero, one, zero_zero, one_one, state_to_density, zero_density
+from simulator.gates import H, X, Z, CNOT
+from simulator.linalg import check_kraus
+from simulator.expand import expand_single_qubit_gate, expand_kraus_to_n_qubits
+from simulator.operations import apply_gate, apply_unitary_density, apply_cnot
+from simulator.noise import (
     dephasing_channel, amplitude_damping_channel, depolarizing_channel,
     thermal_relaxation_channel, thermal_relaxation_from_T1_T2,
     dephasing_kraus, amplitude_damping_kraus, depolarizing_kraus,
     compute_Tphi
 )
-from measurement import get_probabilities, measure, apply_readout_noise, sample
+from simulator.measurement import get_probabilities, measure, apply_readout_noise, sample
 
 
 # ================================================================
@@ -433,7 +433,7 @@ class TestPhysicsExperiments:
 
     def test_idle_noise_decays(self):
         """Doing nothing still causes T1 decay."""
-        from operations import apply_idle_noise
+        from simulator.operations import apply_idle_noise
         T1, T2, Tphi = 100e-6, 80e-6, compute_Tphi(100e-6, 80e-6)
         rho = state_to_density(one)
         rho_after = apply_idle_noise(rho, t=50e-6, T1=T1, Tphi=Tphi)

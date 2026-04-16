@@ -1,5 +1,5 @@
 import numpy as np
-from expand import expand_single_qubit_gate, expand_kraus_to_n_qubits
+from simulator.expand import expand_single_qubit_gate, expand_kraus_to_n_qubits
 
 # ============================================================
 # BASIC RELATIONS
@@ -120,7 +120,7 @@ def pure_dephasing_global(rho, t, Tphi, total_qubits):
 # OPTIONAL GATE NOISE
 # ============================================================
 
-from config import T1, Tphi, GATE_TIMES
+from simulator.config import T1, Tphi, GATE_TIMES
 
 def apply_noise(rho, gate_name, target_qubits, total_qubits):
 

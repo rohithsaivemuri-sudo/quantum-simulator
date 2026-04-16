@@ -1,5 +1,5 @@
 import numpy as np
-from noise import dephasing_channel
+from simulator.noise import dephasing_channel
 
 
 def test_trace_preserved():

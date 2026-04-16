@@ -1,5 +1,5 @@
 import numpy as np
-from expand import expand_single_qubit_gate
+from simulator.expand import expand_single_qubit_gate
 
 
 def dephasing_kraus(p, target_qubit=0):
