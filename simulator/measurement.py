@@ -10,7 +10,7 @@ def measure(rho):
     return np.random.choice(len(probs), p=probs)
 
 
-def apply_readout_noise(outcome, n_qubits, p01, p10):
+def apply_readout_noise(outcome, n_qubits=1, p01=0.0, p10=0.0):
     """
     outcome  : integer 0..2^n-1
     n_qubits : number of qubits

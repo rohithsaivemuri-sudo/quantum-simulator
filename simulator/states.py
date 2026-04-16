@@ -14,6 +14,13 @@ def custom_state(state):
 def state_to_density(psi):
     return np.outer(psi, psi.conj())
 
+
+def initial_state(n_qubits=2):
+    dim = 2 ** n_qubits
+    psi = np.zeros(dim, dtype=complex)
+    psi[0] = 1.0
+    return state_to_density(psi)
+
 def zero_density(n_qubits):
     dim = 2**n_qubits
     rho = np.zeros((dim, dim), dtype=complex)

@@ -1,5 +1,6 @@
 import numpy as np
 from simulator.expand import expand_single_qubit_gate, expand_kraus_to_n_qubits
+from config import GATE_TIMES, T1, T2, Tphi
 
 # ============================================================
 # BASIC RELATIONS
@@ -47,6 +48,26 @@ def amplitude_damping_channel(rho, gamma, target_qubit=0, total_qubits=1):
     return apply_kraus(rho, kraus_full)
 
 
+def depolarizing_kraus(p):
+    I = np.eye(2, dtype=complex)
+    X = np.array([[0, 1], [1, 0]], dtype=complex)
+    Y = np.array([[0, -1j], [1j, 0]], dtype=complex)
+    Z = np.array([[1, 0], [0, -1]], dtype=complex)
+
+    return [
+        np.sqrt(1 - p) * I,
+        np.sqrt(p / 3) * X,
+        np.sqrt(p / 3) * Y,
+        np.sqrt(p / 3) * Z,
+    ]
+
+
+def depolarizing_channel(rho, p, target_qubit=0, total_qubits=1):
+    kraus = depolarizing_kraus(p)
+    kraus_full = expand_kraus_to_n_qubits(kraus, target_qubit, total_qubits)
+    return apply_kraus(rho, kraus_full)
+
+
 # ============================================================
 # DEPHASING (Tphi) — CORRECT MAPPING
 # ============================================================
@@ -89,6 +110,11 @@ def thermal_relaxation_channel(rho, t, T1, Tphi, target_qubit=0, total_qubits=1)
     return rho
 
 
+def thermal_relaxation_from_T1_T2(rho, t, T1, T2, target_qubit=0, total_qubits=1):
+    Tphi = compute_Tphi(T1, T2)
+    return thermal_relaxation_channel(rho, t, T1, Tphi, target_qubit, total_qubits)
+
+
 def apply_global_thermal_noise(rho, t, T1, Tphi, total_qubits):
 
     for q in range(total_qubits):
@@ -120,20 +146,20 @@ def pure_dephasing_global(rho, t, Tphi, total_qubits):
 # OPTIONAL GATE NOISE
 # ============================================================
 
-from simulator.config import T1, Tphi, GATE_TIMES
+def apply_noise(rho, dt, target_qubits=None, total_qubits=2):
+    if isinstance(dt, str):
+        dt = GATE_TIMES[dt]
 
-def apply_noise(rho, gate_name, target_qubits, total_qubits):
+    gamma = 1 - np.exp(-dt / T1) if T1 > 0 else 0.0
+    lam = 1 - np.exp(-dt / Tphi) if Tphi > 0 else 0.0
+    p_phi = lam / 2
 
-    t = GATE_TIMES[gate_name]
-
-    gamma = 1 - np.exp(-t / T1)
-    p_phi = (1 - np.exp(-t / Tphi)) / 2
-
-    for q in target_qubits:
+    qubits = range(total_qubits) if target_qubits is None else target_qubits
+    for q in qubits:
         rho = amplitude_damping_channel(rho, gamma, q, total_qubits)
         rho = dephasing_channel(rho, p_phi, q, total_qubits)
 
-    return rho
+    return normalize_density_matrix(rho)
 
 
 # ============================================================

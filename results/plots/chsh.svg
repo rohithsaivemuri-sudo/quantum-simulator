@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="420" viewBox="0 0 800 420">
+<rect width="100%" height="100%" fill="white" />
+<text x="400" y="24" text-anchor="middle" font-size="20" font-family="Arial">CHSH Decay vs Added Wait Time</text>
+<line x1="70" y1="360" x2="770" y2="360" stroke="black" />
+<line x1="70" y1="45" x2="70" y2="360" stroke="black" />
+<text x="400" y="404" text-anchor="middle" font-size="14" font-family="Arial">Added Wait Time (µs)</text>
+<text x="18" y="210" text-anchor="middle" font-size="14" font-family="Arial" transform="rotate(-90 18 210)">S</text>
+<line x1="70.00" y1="360" x2="70.00" y2="366" stroke="black" />
+<text x="70.00" y="384" text-anchor="middle" font-size="12" font-family="Arial">0</text>
+<line x1="64" y1="360.00" x2="70" y2="360.00" stroke="black" />
+<text x="60" y="364.00" text-anchor="end" font-size="12" font-family="Arial">1.76</text>
+<line x1="245.00" y1="360" x2="245.00" y2="366" stroke="black" />
+<text x="245.00" y="384" text-anchor="middle" font-size="12" font-family="Arial">1</text>
+<line x1="64" y1="281.25" x2="70" y2="281.25" stroke="black" />
+<text x="60" y="285.25" text-anchor="end" font-size="12" font-family="Arial">2.03</text>
+<line x1="420.00" y1="360" x2="420.00" y2="366" stroke="black" />
+<text x="420.00" y="384" text-anchor="middle" font-size="12" font-family="Arial">2</text>
+<line x1="64" y1="202.50" x2="70" y2="202.50" stroke="black" />
+<text x="60" y="206.50" text-anchor="end" font-size="12" font-family="Arial">2.3</text>
+<line x1="595.00" y1="360" x2="595.00" y2="366" stroke="black" />
+<text x="595.00" y="384" text-anchor="middle" font-size="12" font-family="Arial">3</text>
+<line x1="64" y1="123.75" x2="70" y2="123.75" stroke="black" />
+<text x="60" y="127.75" text-anchor="end" font-size="12" font-family="Arial">2.56</text>
+<line x1="770.00" y1="360" x2="770.00" y2="366" stroke="black" />
+<text x="770.00" y="384" text-anchor="middle" font-size="12" font-family="Arial">4</text>
+<line x1="64" y1="45.00" x2="70" y2="45.00" stroke="black" />
+<text x="60" y="49.00" text-anchor="end" font-size="12" font-family="Arial">2.83</text>
+<line x1="70" y1="290.12" x2="770" y2="290.12" stroke="#888" stroke-dasharray="6 4" />
+<text x="766" y="284.12" text-anchor="end" font-size="12" font-family="Arial">Classical Limit</text>
+<path d="M 70.00 45.00 L 113.75 45.00 L 157.50 45.00 L 245.00 45.00 L 420.00 45.00 L 770.00 45.00" fill="none" stroke="#1f77b4" stroke-width="2.5" />
+<circle cx="70.00" cy="45.00" r="3.5" fill="#1f77b4" />
+<circle cx="113.75" cy="45.00" r="3.5" fill="#1f77b4" />
+<circle cx="157.50" cy="45.00" r="3.5" fill="#1f77b4" />
+<circle cx="245.00" cy="45.00" r="3.5" fill="#1f77b4" />
+<circle cx="420.00" cy="45.00" r="3.5" fill="#1f77b4" />
+<circle cx="770.00" cy="45.00" r="3.5" fill="#1f77b4" />
+<line x1="70" y1="55" x2="94" y2="55" stroke="#1f77b4" stroke-width="2.5" />
+<text x="100" y="59" font-size="12" font-family="Arial">Ideal S</text>
+<path d="M 70.00 78.88 L 113.75 101.60 L 157.50 123.53 L 245.00 165.12 L 420.00 239.82 L 770.00 360.00" fill="none" stroke="#d62728" stroke-width="2.5" />
+<circle cx="70.00" cy="78.88" r="3.5" fill="#d62728" />
+<circle cx="113.75" cy="101.60" r="3.5" fill="#d62728" />
+<circle cx="157.50" cy="123.53" r="3.5" fill="#d62728" />
+<circle cx="245.00" cy="165.12" r="3.5" fill="#d62728" />
+<circle cx="420.00" cy="239.82" r="3.5" fill="#d62728" />
+<circle cx="770.00" cy="360.00" r="3.5" fill="#d62728" />
+<line x1="220" y1="55" x2="244" y2="55" stroke="#d62728" stroke-width="2.5" />
+<text x="250" y="59" font-size="12" font-family="Arial">Noisy S</text>
+</svg>

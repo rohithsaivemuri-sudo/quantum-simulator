@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="420" viewBox="0 0 800 420">
+<rect width="100%" height="100%" fill="white" />
+<text x="400" y="24" text-anchor="middle" font-size="20" font-family="Arial">Bell-State Benchmark</text>
+<line x1="70" y1="360" x2="770" y2="360" stroke="black" />
+<line x1="70" y1="45" x2="70" y2="360" stroke="black" />
+<text x="400" y="404" text-anchor="middle" font-size="14" font-family="Arial">Measurement Outcome</text>
+<text x="18" y="210" text-anchor="middle" font-size="14" font-family="Arial" transform="rotate(-90 18 210)">Probability</text>
+<line x1="64" y1="360.00" x2="70" y2="360.00" stroke="black" />
+<text x="60" y="364.00" text-anchor="end" font-size="12" font-family="Arial">0</text>
+<line x1="64" y1="281.25" x2="70" y2="281.25" stroke="black" />
+<text x="60" y="285.25" text-anchor="end" font-size="12" font-family="Arial">0.126</text>
+<line x1="64" y1="202.50" x2="70" y2="202.50" stroke="black" />
+<text x="60" y="206.50" text-anchor="end" font-size="12" font-family="Arial">0.253</text>
+<line x1="64" y1="123.75" x2="70" y2="123.75" stroke="black" />
+<text x="60" y="127.75" text-anchor="end" font-size="12" font-family="Arial">0.379</text>
+<line x1="64" y1="45.00" x2="70" y2="45.00" stroke="black" />
+<text x="60" y="49.00" text-anchor="end" font-size="12" font-family="Arial">0.505</text>
+<text x="157.50" y="384" text-anchor="middle" font-size="12" font-family="Arial">00</text>
+<rect x="99.17" y="48.17" width="46.67" height="311.83" fill="#1f77b4" />
+<rect x="157.50" y="45.00" width="46.67" height="315.00" fill="#ff7f0e" />
+<text x="332.50" y="384" text-anchor="middle" font-size="12" font-family="Arial">01</text>
+<rect x="274.17" y="360.00" width="46.67" height="0.00" fill="#1f77b4" />
+<rect x="332.50" y="355.47" width="46.67" height="4.53" fill="#ff7f0e" />
+<text x="507.50" y="384" text-anchor="middle" font-size="12" font-family="Arial">10</text>
+<rect x="449.17" y="360.00" width="46.67" height="0.00" fill="#1f77b4" />
+<rect x="507.50" y="355.47" width="46.67" height="4.53" fill="#ff7f0e" />
+<text x="682.50" y="384" text-anchor="middle" font-size="12" font-family="Arial">11</text>
+<rect x="624.17" y="48.17" width="46.67" height="311.83" fill="#1f77b4" />
+<rect x="682.50" y="60.40" width="46.67" height="299.60" fill="#ff7f0e" />
+<rect x="70" y="45" width="24" height="12" fill="#1f77b4" />
+<text x="100" y="55" font-size="12" font-family="Arial">Ideal</text>
+<rect x="220" y="45" width="24" height="12" fill="#ff7f0e" />
+<text x="250" y="55" font-size="12" font-family="Arial">Noisy</text>
+</svg>
