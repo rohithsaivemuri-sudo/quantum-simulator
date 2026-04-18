@@ -11,11 +11,7 @@ def measure(rho):
 
 
 def apply_readout_noise(outcome, n_qubits=1, p01=0.0, p10=0.0):
-    """
-    outcome  : integer 0..2^n-1
-    n_qubits : number of qubits
-    Returns  : noisy integer outcome after per-qubit bit-flip errors
-    """
+    
     bits = [(outcome >> i) & 1 for i in range(n_qubits - 1, -1, -1)]  # MSB first
     noisy_bits = []
     for b in bits:
