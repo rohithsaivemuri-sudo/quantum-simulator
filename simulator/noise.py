@@ -146,18 +146,29 @@ def pure_dephasing_global(rho, t, Tphi, total_qubits):
 # OPTIONAL GATE NOISE
 # ============================================================
 
-def apply_noise(rho, dt, target_qubits=None, total_qubits=2):
-    if isinstance(dt, str):
-        dt = GATE_TIMES[dt]
+def apply_noise(rho, dt, total_qubits=2, target_qubits=None):
+    """
+    Apply noise to all qubits after a gate of duration dt.
+
+    Every qubit gets thermal relaxation (T1 + Tphi) over dt —
+    active and idle qubits both decohere during the gate time.
+
+    Target qubits additionally get a depolarizing gate error,
+    modelling imperfect gate operations on top of thermal noise.
+    """
+    from config import GATE_ERROR_RATE
 
     gamma = 1 - np.exp(-dt / T1) if T1 > 0 else 0.0
-    lam = 1 - np.exp(-dt / Tphi) if Tphi > 0 else 0.0
-    p_phi = lam / 2
+    p_phi = (1 - np.exp(-dt / Tphi)) / 2 if Tphi > 0 else 0.0
 
-    qubits = range(total_qubits) if target_qubits is None else target_qubits
-    for q in qubits:
+    for q in range(total_qubits):
+        # thermal relaxation — all qubits
         rho = amplitude_damping_channel(rho, gamma, q, total_qubits)
         rho = dephasing_channel(rho, p_phi, q, total_qubits)
+
+        # gate error — only qubits the gate actually touched
+        if target_qubits is not None and q in target_qubits:
+            rho = depolarizing_channel(rho, GATE_ERROR_RATE, q, total_qubits)
 
     return normalize_density_matrix(rho)
 

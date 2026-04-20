@@ -1,4 +1,3 @@
- 
 # main.py
 import numpy as np
 from simulator.circuit import GateOp
@@ -51,15 +50,9 @@ def run_circuit(circuit, rho, total_qubits):
         print_analysis(rho, f"After gate: {op.name} on qubits {op.targets}")
  
         # ------------------ APPLY GATE NOISE ------------------
-        rho = apply_noise(rho, op.name, op.targets, total_qubits)
+        # Pass dt explicitly — all qubits (active + idle) decohere over the gate duration.
+        rho = apply_noise(rho, GATE_TIMES[op.name], total_qubits=total_qubits)
         print_analysis(rho, f"After noise: {op.name}")
- 
-        # ------------------ (OPTIONAL) IDLE NOISE ------------------
-        # Disabled to avoid double-counting with WAIT
-        # idle_qubits = [q for q in range(total_qubits) if q not in op.targets]
-        # gate_time = GATE_TIMES[op.name]
-        # for q in idle_qubits:
-        #     rho = apply_idle_noise(rho, gate_time, q, total_qubits)
  
     return rho
  
@@ -104,4 +97,3 @@ def main():
  
 if __name__ == "__main__":
     main()
- 

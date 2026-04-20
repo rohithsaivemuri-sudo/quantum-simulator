@@ -1,10 +1,8 @@
 import numpy as np
+from simulator.linalg import tensor  # single source of truth
 
-# Identity gate
+# Identity gate — kept here for expand internals
 I = np.eye(2, dtype=complex)
-
-def tensor(a, b):
-    return np.kron(a, b)
 
 
 def expand_single_qubit_gate(gate, target_qubit, total_qubits=2):
