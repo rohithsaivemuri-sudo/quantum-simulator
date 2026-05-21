@@ -1,6 +1,6 @@
 import numpy as np
-from simulator.expand import expand_single_qubit_gate, expand_kraus_to_n_qubits
-from config import GATE_TIMES, T1, T2, Tphi
+from simulator.expand import expand_kraus_to_n_qubits
+from simulator.config import GATE_ERROR_RATE, GATE_TIMES, T1, T2, Tphi
 
 # ============================================================
 # BASIC RELATIONS
@@ -72,24 +72,26 @@ def depolarizing_channel(rho, p, target_qubit=0, total_qubits=1):
 # DEPHASING (Tphi) — CORRECT MAPPING
 # ============================================================
 
-def dephasing_kraus(p, target_qubit=0, total_qubits=1):
+def dephasing_kraus(p, target_qubit=None, total_qubits=1):
+    """
+    Return dephasing Kraus operators.
+
+    By default this returns the base 1-qubit operators. ``target_qubit`` may be
+    provided for backward compatibility with older tests and callers that expect
+    already-expanded operators for multi-qubit systems.
+    """
     I = np.eye(2, dtype=complex)
     Z = np.array([[1, 0], [0, -1]], dtype=complex)
 
-    E0 = np.sqrt(1 - p) * I
-    E1 = np.sqrt(p) * Z
-
-    if total_qubits == 1:
-        return [E0, E1]
-
-    E0_full = expand_single_qubit_gate(E0, target_qubit, total_qubits)
-    E1_full = expand_single_qubit_gate(E1, target_qubit, total_qubits)
-
-    return [E0_full, E1_full]
-
+    kraus = [np.sqrt(1 - p) * I, np.sqrt(p) * Z]
+    if target_qubit is None:
+        return kraus
+    return expand_kraus_to_n_qubits(kraus, target_qubit, total_qubits)
 
 def dephasing_channel(rho, p, target_qubit=0, total_qubits=1):
-    return apply_kraus(rho, dephasing_kraus(p, target_qubit, total_qubits))
+    # This remains the same, but now it securely expands the 1-qubit ops
+    kraus_full = expand_kraus_to_n_qubits(dephasing_kraus(p), target_qubit, total_qubits)
+    return apply_kraus(rho, kraus_full)
 
 
 # ============================================================
@@ -146,17 +148,17 @@ def pure_dephasing_global(rho, t, Tphi, total_qubits):
 # OPTIONAL GATE NOISE
 # ============================================================
 
-def apply_noise(rho, dt, total_qubits=2, target_qubits=None):
+def apply_noise(rho, dt, target_qubits=None, total_qubits=2):
     """
-    Apply noise to all qubits after a gate of duration dt.
+    Apply time-dependent noise over an incremental duration ``dt``.
 
-    Every qubit gets thermal relaxation (T1 + Tphi) over dt —
-    active and idle qubits both decohere during the gate time.
-
-    Target qubits additionally get a depolarizing gate error,
-    modelling imperfect gate operations on top of thermal noise.
+    ``dt`` can be either a gate duration in seconds or a legacy gate-name string.
+    All qubits receive thermal relaxation during that interval because even idle
+    qubits decohere while another qubit is being driven. If target qubits are
+    supplied, an optional depolarizing gate error is applied only to those qubits.
     """
-    from config import GATE_ERROR_RATE
+    if isinstance(dt, str):
+        dt = GATE_TIMES[dt]
 
     gamma = 1 - np.exp(-dt / T1) if T1 > 0 else 0.0
     p_phi = (1 - np.exp(-dt / Tphi)) / 2 if Tphi > 0 else 0.0

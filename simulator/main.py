@@ -1,4 +1,10 @@
 # main.py
+if __package__ in {None, ""}:
+    import sys
+    from pathlib import Path
+
+    sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+
 import numpy as np
 from simulator.circuit import GateOp
 from simulator.expand import expand_single_qubit_gate
@@ -50,8 +56,13 @@ def run_circuit(circuit, rho, total_qubits):
         print_analysis(rho, f"After gate: {op.name} on qubits {op.targets}")
  
         # ------------------ APPLY GATE NOISE ------------------
-        # Pass dt explicitly — all qubits (active + idle) decohere over the gate duration.
-        rho = apply_noise(rho, GATE_TIMES[op.name], total_qubits=total_qubits)
+        # Pass both dt and targets so acted-on qubits can also receive gate-local errors.
+        rho = apply_noise(
+            rho,
+            GATE_TIMES[op.name],
+            target_qubits=op.targets,
+            total_qubits=total_qubits,
+        )
         print_analysis(rho, f"After noise: {op.name}")
  
     return rho
