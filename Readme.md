@@ -42,7 +42,7 @@ Distinguishes:
 ## Installation
 
 ### Step 1 — Clone repository
-
+```bash
 git clone https://github.com/rohithsaivemuri-sudo/quantum-simulator.git
 cd quantum-simulator
 Step 2 — Create virtual environment
